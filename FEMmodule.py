@@ -29,19 +29,19 @@ def Nodes(nx, ny, l=10, w=2):
     
     elements = np.zeros((nx*ny,4))
     
-    elements[:,0] =  np.reshape(np.tile(np.arange(1,nx+1),(ny,1)).T + \
+    elements[:,0] =  np.reshape(np.tile(np.arange(0,nx),(ny,1)).T + \
                                 np.tile(np.arange(0,nx*ny+(ny-nx)+1,nx+1),(nx,1)), \
                                         (nx*ny),order='F')
     elements[:,1] = elements[:,0] + 1
     elements[:,2] = elements[:,0] + 1 + nx + 1
     elements[:,3] = elements[:,0] + nx + 1
     
-    constr_nodes = np.arange(1,(nx+1)*(ny+1)+1, nx+1 )
+    constr_nodes = np.arange(0,(nx+1)*(ny+1), nx+1 )
     
     return nodes, elements, constr_nodes
     
 
-#n, e, cn = Nodes(2,3)
+#n, e, cn = Nodes(2,2)
 #
 #print n
 #print e
