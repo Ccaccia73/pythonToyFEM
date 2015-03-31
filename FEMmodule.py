@@ -148,7 +148,7 @@ def ElementVolumeForce(nodes, f, W, xi):
     """
     N = W.Weights(xi)
     [der, J] = SpatialDerivative(nodes, xi, W.Ders)
-    BN = np.zeros((W.nnodes, W.ndim))
+    BN = np.zeros((W.nnodes, W.ndims))
     BN[:,0] = N*f[0]
     BN[:,1] = N*f[1]
     Force = BN*J
