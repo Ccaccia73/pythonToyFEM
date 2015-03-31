@@ -38,7 +38,7 @@ def Nodes(nx, ny, l=10, w=2):
     
     constr_nodes = np.arange(1,(nx+1)*(ny+1)+1, nx+1 )
     
-    return (nodes, elements,constr_nodes)
+    return (nodes, elements, constr_nodes)
     
 
 #n, e, cn = Nodes(2,3)
@@ -46,3 +46,13 @@ def Nodes(nx, ny, l=10, w=2):
 #print n
 #print e
 #print cn
+
+
+class GaussIntegr2D2x2:
+    npoints = 4
+    points = 1./np.sqrt(3.)*np.array([[-1, -1],[1,-1],[-1,1],[1,1]])
+    weights = np.ones((4,1))
+
+    def Integrate(self, f):
+        return np.sum([f(self.points[i,:])*self.weights[i] for i in range(self.npoints)])
+
