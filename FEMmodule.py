@@ -57,6 +57,106 @@ class GaussIntegr2D2x2:
         return np.sum([f(self.points[i,:])*self.weights[i] for i in range(self.npoints)])
 
 
+
 class PlaneStressElasticTensor:
     def __init__(self, E, nu):
         self.ElTens = np.array([[1., nu, 0.],[nu, 1., 0.],[0., 0., (1. - nu) / 2.]]) * (E / (1 - nu**2))
+
+
+
+class BilinearWeights:
+    """
+    Bilinear interpolation functions
+    """
+    ndims = 2
+    nnodes = 4
+    
+    def Weights(self, x):
+        """
+        bilinear weights
+        x must be a 1x2 vector
+        weights is a 4x1 vector [N1 N2 N3 N4]
+        """
+        weights = np.zeros(self.nnodes)
+        weights[0] = (x[0]-1)*(x[1]-1)*0.25
+        weights[1] = (x[0]+1)*(x[1]-1)*0.25
+        weights[2] = (x[0]+1)*(x[1]+1)*0.25
+        weights[3] = (x[0]-1)*(x[1]+1)*0.25
+        
+        return weights
+    
+    def Ders(self, x):
+        """
+        Bilinear weight derivatives
+        - x must be a (1x2) vector
+        - ders is a (2x4) vector: ders(i,j) is the partial derivative of weight j with respect to the coordinate i
+        """
+        ders = np.zeros((self.ndims, self.nnodes))
+        ders[0, 0] = (x[1] - 1.) *  0.25	#-1 -1
+        ders[0, 1] = (x[1] - 1.) * -0.25	# 1 -1
+        ders[0, 2] = (x[1] + 1.) *  0.25	# 1  1
+        ders[0, 3] = (x[1] + 1.) * -0.25    #-1  1
+        ders[1, 0] = (x[0] - 1.) *  0.25    #-1 -1
+        ders[1, 1] = (x[0] + 1.) * -0.25    # 1 -1
+        ders[1, 2] = (x[0] + 1.) *  0.25	# 1  1
+        ders[1, 3] = (x[0] - 1.) * -0.25	#-1  1
+        return ders
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
