@@ -38,7 +38,7 @@ def Nodes(nx, ny, l=10, w=2):
     
     constr_nodes = np.arange(1,(nx+1)*(ny+1)+1, nx+1 )
     
-    return (nodes, elements, constr_nodes)
+    return nodes, elements, constr_nodes
     
 
 #n, e, cn = Nodes(2,3)
