@@ -50,11 +50,14 @@ def Nodes(nx, ny, l=10, w=2):
 
 class GaussIntegr2D2x2:
     npoints = 4
-    points = 1./np.sqrt(3.)*np.array([[-1, -1],[1,-1],[-1,1],[1,1]])
+    points = 1./np.sqrt(3.)*np.array([[-1, -1],[1,-1],[1,1],[-1,1]])
     weights = np.ones((4,1))
 
     def Integrate(self, f):
-        return np.sum([f(self.points[i,:])*self.weights[i] for i in range(self.npoints)])
+        Integral = f(self.points[0,:])*self.weights[0]
+        for i in range(1,self.npoints):
+            Integral += f(self.points[i,:])*self.weights[i]
+        return Integral
 
 
 
@@ -79,9 +82,9 @@ class BilinearWeights:
         """
         weights = np.zeros(self.nnodes)
         weights[0] = (x[0]-1)*(x[1]-1)*0.25
-        weights[1] = (x[0]+1)*(x[1]-1)*0.25
+        weights[1] = (x[0]+1)*(x[1]-1)*-0.25
         weights[2] = (x[0]+1)*(x[1]+1)*0.25
-        weights[3] = (x[0]-1)*(x[1]+1)*0.25
+        weights[3] = (x[0]-1)*(x[1]+1)*-0.25
         
         return weights
     
@@ -148,11 +151,10 @@ def ElementVolumeForce(nodes, f, W, xi):
     """
     N = W.Weights(xi)
     [der, J] = SpatialDerivative(nodes, xi, W.Ders)
-    BN = np.zeros((W.nnodes, W.ndims))
-    BN[:,0] = N*f[0]
-    BN[:,1] = N*f[1]
+    BN = np.zeros(W.nnodes * W.ndims)
+    BN[0:4] = N*f[0]
+    BN[4:] = N*f[1]
     Force = BN*J
-    
     return Force
         
         
