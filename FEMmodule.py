@@ -56,3 +56,7 @@ class GaussIntegr2D2x2:
     def Integrate(self, f):
         return np.sum([f(self.points[i,:])*self.weights[i] for i in range(self.npoints)])
 
+
+class PlaneStressElasticTensor:
+    def __init__(self, E, nu):
+        self.ElTens = np.array([[1., nu, 0.],[nu, 1., 0.],[0., 0., (1. - nu) / 2.]]) * (E / (1 - nu**2))
