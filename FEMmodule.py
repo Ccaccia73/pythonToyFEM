@@ -104,8 +104,8 @@ class BilinearWeights:
         
         
 def SpatialDerivative(nodes, xi, wd):
-    deN_dexi = wd[xi]
-    dex_dexi = deN_dexi * nodes
+    deN_dexi = wd(xi)
+    dex_dexi = np.dot(deN_dexi,nodes)
     J = np.linalg.det(dex_dexi)
     xder = np.linalg.solve(dex_dexi, deN_dexi)
     return xder, J         
@@ -117,10 +117,10 @@ def BN(der):
     DOFs are assumed to be ordered as [x0 x1 x2 x3 y0 y1 y2 y3]
     """
     BN = np.zeros((3,8))
-    BN[0,0:3] = der[0,:]
-    BN[1,4:7] = der[1,:]
-    BN[2,0:3] = der[1,:]
-    BN[2,4:7] = der[0,:]
+    BN[0,0:4] = der[0,:]
+    BN[1,4:]  = der[1,:]
+    BN[2,0:4] = der[1,:]
+    BN[2,4:]  = der[0,:]
     
     return BN
         
@@ -132,9 +132,9 @@ def ElementLocalStiffness(nodes, E, W, xi):
     W: Interpolation class
     xi: local coordinate
     """
-    der, J = SpatialDerivative(nodes, xi, W.Der)
+    der, J = SpatialDerivative(nodes, xi, W.Ders)
     B = BN(der)
-    Stiff = B.T.dot(E.Eltens).dot(B)*J
+    Stiff = B.T.dot(E.ElTens).dot(B)*J
     return Stiff
         
         
