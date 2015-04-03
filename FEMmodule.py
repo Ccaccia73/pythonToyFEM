@@ -137,7 +137,7 @@ def ElementLocalStiffness(nodes, E, W, xi):
     """
     der, J = SpatialDerivative(nodes, xi, W.Ders)
     B = BN(der)
-    Stiff = B.T.dot(E.ElTens).dot(B)*J
+    Stiff = (B.T).dot(E.ElTens).dot(B)*J
     return Stiff
         
         
@@ -156,52 +156,5 @@ def ElementVolumeForce(nodes, f, W, xi):
     BN[4:] = N*f[1]
     Force = BN*J
     return Force
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         
         
