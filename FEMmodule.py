@@ -145,7 +145,7 @@ def ElementVolumeForce(nodes, f, W, xi):
     """
     compute the element volume force
     nodes: coordinates of nodes
-    W: elastic tensor class
+    f: force vector
     W: Interpolation class
     xi: local coordinate
     """
