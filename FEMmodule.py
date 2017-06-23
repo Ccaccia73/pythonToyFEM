@@ -5,7 +5,6 @@ Created on Tue Mar 31 09:47:52 2015
 @author: claudio
 """
 
-from __future__ import division
 import numpy as np
 
 def Nodes(nx, ny, l=10, w=2):
@@ -49,13 +48,14 @@ def Nodes(nx, ny, l=10, w=2):
 
 
 class GaussIntegr2D2x2:
-    npoints = 4
-    points = 1./np.sqrt(3.)*np.array([[-1, -1],[1,-1],[1,1],[-1,1]])
-    weights = np.ones((4,1))
+    def __init__(self):
+        self.npoints = 4
+        self.points = 1./np.sqrt(3.)*np.array([[-1, -1],[1,-1],[1,1],[-1,1]])
+        self.weights = np.ones((4,1))
 
     def Integrate(self, f):
-        Integral = f(self.points[0,:])*self.weights[0]
-        for i in range(1,self.npoints):
+        Integral = 0.0
+        for i in range(0,self.npoints):
             Integral += f(self.points[i,:])*self.weights[i]
         return Integral
 
@@ -71,8 +71,9 @@ class BilinearWeights:
     """
     Bilinear interpolation functions
     """
-    ndims = 2
-    nnodes = 4
+    def __init__(self):
+        self.ndims = 2
+        self.nnodes = 4
     
     def Weights(self, x):
         """
